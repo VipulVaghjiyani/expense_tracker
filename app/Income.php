@@ -30,6 +30,7 @@ class Income extends Model
         'created_by_id',
         'income_category_id',
     ];
+   
 
     public function income_category()
     {
@@ -38,14 +39,13 @@ class Income extends Model
 
     public function getEntryDateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $value ? Carbon::parse($value) : null;
     }
 
     public function setEntryDateAttribute($value)
     {
-        $this->attributes['entry_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['entry_date'] = $value ? Carbon::createFromFormat('Y-m-d', $value)->format('Y-m-d') : null;
     }
-
     public function created_by()
     {
         return $this->belongsTo(User::class, 'created_by_id');
